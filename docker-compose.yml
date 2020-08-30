@@ -1,0 +1,21 @@
+version: "3.5"
+networks:
+    server_node:
+      name: server
+
+services: 
+    node:
+        build: .
+        volumes: 
+            - .:/var/lib/nodeJS
+        ports: 
+            - "8080:8080"
+        networks: 
+            - server_node
+        command: ["sh","-c","npm i express nodemon && npm start"]
+    mongo:
+        image: mongo
+        networks:
+            - server_node
+        volumes:
+            - ./mongodb:/var/lib/mongodb
